@@ -33,9 +33,9 @@ def weather_3_value(temperatures: list[float]|pd.Series, humidities: list[float]
         # print(f'cumsum : {total_sum}')
         
     # TODO: get half-hourly data and remove *2
-    return abs(total_sum*2)
+    return abs(total_sum)
 
-def weather_4_value(temperatures: list[float]|pd.Series, humidities: list[float]|pd.Series) -> float:
+def weather_4_value(temperatures: list[float]|pd.Series, humidities: list[float]|pd.Series) -> np.float:
     """
     Settlement value for 4_Weather
     """
@@ -63,7 +63,7 @@ def weather_4_value(temperatures: list[float]|pd.Series, humidities: list[float]
         step_value = (current_temp+current_humidity) * ((t_mean - t_median) * (h_mean - h_median))
         
         # TODO: get half-hourly data and remove *2
-        total_settlement += step_value*2
+        total_settlement += step_value
 
     # 4. Final Absolute Value
     return abs(total_settlement)
