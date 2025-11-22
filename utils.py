@@ -1,4 +1,5 @@
 import statistics as st
+import pandas as pd
 
 def eisbach_value(flow_rate: float, water_level: float) -> float:
     """
@@ -13,7 +14,7 @@ def eisbach_call_value(strike_price: float, flow_rates: list[float], water_level
     settlement_value = round((max(water_levels) * max(flow_rates)) - (min(water_levels) - min(flow_rates)))
     return max(0, settlement_value-strike_price)
 
-def weather_3_value(temperatures: list[float], humidities: list[float]) -> float:
+def weather_3_value(temperatures: list[float]|pd.Series, humidities: list[float]|pd.Series) -> float:
     """
     Settlement value for 3_Weather
     """
@@ -26,9 +27,10 @@ def weather_3_value(temperatures: list[float], humidities: list[float]) -> float
     for temp, humidity in zip(temperatures, humidities):
         # Calculate interval value: (Temperature * 2 + Humidity)
         total_sum += (temp * 2) + humidity
+        # print(f'cumsum : {total_sum}')
         
-    # The rule states: "settles to absolute value of outcome"
-    return abs(total_sum)
+    # TODO: get half-hourly data and remove *2
+    return abs(total_sum*2)
 
 def weather_4_value(temperatures: list[float], humidities: list[float]) -> float:
     """
